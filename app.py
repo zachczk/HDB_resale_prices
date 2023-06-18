@@ -5,31 +5,42 @@ from prediction import predict
 
 # Add title and description
 st.title('Predicting HDB Resale Property Prices')
-st.markdown('Toy model to play to predict \
-HDB resale prices')
+st.markdown('Toy model to play to predict HDB resale prices')
 
 # Add features sliders
 st.header('HDB Property Features')
 col1, col2 = st.columns(2)
 
 with col1:
-    st.text('Sepal characteristics')
-    sepal_l = st.slider('Sepal lenght (cm)', 1.0, 8.0, 0.5)
-    sepal_w = st.slider('Sepal width (cm)', 2.0, 4.4, 0.5)
+    remaining_lease_months = st.slider('Remaining Lease (Months)', 500, 1200, 10)
+    floor_area_sqm = st.slider('Floor Area (sqm)', 30, 250, 10)
 
+# Add dropdown boxes
 with col2:
-    st.text('Pepal characteristics')
-    petal_l = st.slider('Petal lenght (cm)', 1.0, 7.0, 0.5)
-    petal_w = st.slider('Petal width (cm)', 0.1, 2.5, 0.5)
+    town = ['ANG MO KIO', 'BEDOK', 'BISHAN', 'BUKIT BATOK', 'BUKIT MERAH',
+            'BUKIT PANJANG', 'BUKIT TIMAH', 'CENTRAL AREA', 'CHOA CHU KANG',
+            'CLEMENTI', 'GEYLANG', 'HOUGANG', 'JURONG EAST', 'JURONG WEST',
+            'KALLANG/WHAMPOA', 'MARINE PARADE', 'PASIR RIS', 'PUNGGOL',
+            'QUEENSTOWN', 'SEMBAWANG', 'SENGKANG', 'SERANGOON', 'TAMPINES',
+            'TOA PAYOH', 'WOODLANDS', 'YISHUN']
+    selected_town = st.selectbox('Selected Town', town)
+    st.write('You selected:', selected_town)
+
+    storey_range = ['10 TO 12', '01 TO 03', '04 TO 06', '07 TO 09', '13 TO 15',
+                    '19 TO 21', '22 TO 24', '16 TO 18', '34 TO 36', '28 TO 30',
+                    '37 TO 39', '49 TO 51', '25 TO 27', '40 TO 42', '31 TO 33',
+                    '46 TO 48', '43 TO 45']
+    selected_storey_range = st.selectbox('Selected Storey Range', storey_range)
+    st.write('You selected:', selected_storey_range)
 
 # Add prediction button
 st.button('Predict HDB Property Price')
 if st.button('Predict HDB Property Price'):
-    result = predict(X_test_df)
+    result = predict(remaining_lease_months, floor_area_sqm, selected_town, selected_storey_range)
     st.text(result)
 
-st.text('')
-st.text('')
-st.markdown(
+    st.text('')
+    st.text('')
+    st.markdown(
     '`Create by` [Zach Chen] [Linkedin: https://www.linkedin.com/in/zach-chen-73405167/ | \
          `Code:` [GitHub](https://github.com/zachczk)')
