@@ -37,13 +37,13 @@ with col2:
 # # Preprocess data
 from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler()
-remaining_lease_months_scaled = scaler.fit_transform([remaining_lease_months])
-floor_area_sqm_scaled = scaler.fit_transform([floor_area_sqm])
+remaining_lease_months_scaled = scaler.fit_transform(np.array([remaining_lease_months]).reshape(-1, 1))
+floor_area_sqm_scaled = scaler.fit_transform(np.array([floor_area_sqm]).reshape(-1, 1))
 
 from sklearn.preprocessing import LabelEncoder
 encoder = LabelEncoder()
-selected_town =  encoder.fit_transform([selected_town])
-selected_storey_range =  encoder.fit_transform([selected_storey_range])
+selected_town_encoded = encoder.transform([selected_town])
+selected_storey_range_encoded = encoder.transform([selected_storey_range])
 
 
 # Add prediction button
