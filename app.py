@@ -33,9 +33,21 @@ with col2:
     selected_storey_range = st.selectbox('Selected Storey Range', storey_range)
     st.write('You selected:', selected_storey_range)
 
+
+# # Preprocess data
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+remaining_lease_months_scaled = scaler.fit_transform([remaining_lease_months])
+floor_area_sqm_scaled = scaler.fit_transform([floor_area_sqm])
+
+from sklearn.preprocessing import LabelEncoder
+encoder = LabelEncoder()
+selected_town =  encoder.fit_transform([selected_town])
+selected_storey_range =  encoder.fit_transform([selected_storey_range])
+
+
 # Add prediction button
-st.button('Predict HDB Property Price')
-if st.button('Predict HDB Property Price'):
+if st.button('Predict HDB Property Price', key='prediction_button'):
     result = predict(remaining_lease_months, floor_area_sqm, selected_town, selected_storey_range)
     st.text(result)
 
