@@ -93,14 +93,19 @@ if selected_storey_range in storey_mapping:
     selected_storey_range = storey_mapping[selected_storey_range]
 
 
-from sklearn.preprocessing import MinMaxScaler
-import joblib
+# from sklearn.preprocessing import MinMaxScaler
+# import joblib
 
-# Load the saved scaler
-scaler = joblib.load('scaler.joblib')
+# # Load the saved scaler
+# scaler = joblib.load('scaler.joblib')
 
-categorical_features = []  # Example categorical feature names
-numerical_features = []
+def scale_features(df):
+    scaled_df = pd.DataFrame()
+    for column in df.columns:
+        max_value = df[column].max()
+        min_value = df[column].min()
+        scaled_df[column] = (df[column] - min_value) / (max_value - min_value)
+    return scaled_df
 
 data = {
     'remaining_lease_months': [remaining_lease_months],
@@ -111,9 +116,7 @@ data = {
 
 X_df = pd.DataFrame(data, index=[0]) 
 
-X_scaled_array = scaler.transform(X_df)
-
-X_scaled_df = pd.DataFrame(X_scaled_array, columns = X_df.columns)
+X_scaled_df = scale_features(X_df)
 
 
 # Add prediction button
