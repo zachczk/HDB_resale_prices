@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from prediction import predict
 
+
 # Add title and description
 st.title('Predicting HDB Resale Property Prices')
 st.markdown('Toy model to play to predict HDB resale prices')
