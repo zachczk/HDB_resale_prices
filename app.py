@@ -117,7 +117,7 @@ X_scaled_df = pd.DataFrame(X_scaled_array, columns = X_df.columns)
 
 # Add prediction button
 if st.button('Predict HDB Property Price', key='prediction_button'):
-    result = predict(remaining_lease_months, floor_area_sqm, selected_town, selected_storey_range)
+    result = predict(X_scaled_df)
     st.text(result)
 
     st.text('')
