@@ -120,7 +120,8 @@ X_scaled_df = scale_features(X_df)
 # Add prediction button
 if st.button('Predict HDB Property Price', key='prediction_button'):
     result = predict(X_scaled_df)
-    formatted_result = '${:,.0f}'.format(result)
+    scalar_result = result.item()
+    formatted_result = '${:,.0f}'.format(scalar_result)
     st.write(formatted_result)
 
     st.text('')
