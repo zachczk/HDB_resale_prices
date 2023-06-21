@@ -92,19 +92,17 @@ storey_mapping = {
 if selected_storey_range in storey_mapping:
     selected_storey_range = storey_mapping[selected_storey_range]
 
-
-# from sklearn.preprocessing import MinMaxScaler
-# import joblib
-
-# # Load the saved scaler
-# scaler = joblib.load('scaler.joblib')
-
 def scale_features(df):
     scaled_df = pd.DataFrame()
     for column in df.columns:
         max_value = df[column].max()
         min_value = df[column].min()
-        scaled_df[column] = (df[column] - min_value) / (max_value - min_value)
+        
+        # Check if the range is zero
+        if max_value == min_value:
+            scaled_df[column] = df[column]  # Set the column as it is
+        else:
+            scaled_df[column] = (df[column] - min_value) / (max_value - min_value)
     return scaled_df
 
 data = {
