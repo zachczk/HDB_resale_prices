@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from prediction import predict
+from prediction import predict #predict is a function inthe prediction script
 
 
 # Add title and description
@@ -13,8 +13,15 @@ st.header('HDB Property Features')
 col1, col2 = st.columns(2)
 
 with col1:
-    remaining_lease_months = st.slider('Remaining Lease (Months)', 500, 1200, 10)
-    floor_area_sqm = st.slider('Floor Area (sqm)', 30, 250, 10)
+    remaining_lease_input = st.text_input('Remaining Lease (Months)')
+    floor_area_input = st.text_input('Floor Area (sqm)')
+
+    try:
+        remaining_lease_months = int(remaining_lease_input)
+        floor_area_sqm = int(floor_area_input)
+    except ValueError:
+        st.error('Please enter valid numeric values.')
+        st.stop()
 
 # Add dropdown boxes
 with col2:
@@ -27,10 +34,10 @@ with col2:
     selected_town = st.selectbox('Selected Town', town)
     st.write('You selected:', selected_town)
 
-    storey_range = ['10 TO 12', '01 TO 03', '04 TO 06', '07 TO 09', '13 TO 15',
-                    '19 TO 21', '22 TO 24', '16 TO 18', '34 TO 36', '28 TO 30',
-                    '37 TO 39', '49 TO 51', '25 TO 27', '40 TO 42', '31 TO 33',
-                    '46 TO 48', '43 TO 45']
+    storey_range = ['01 TO 03', '04 TO 06', '07 TO 09', '10 TO 12', '13 TO 15',
+                    '16 TO 18', '19 TO 21', '22 TO 24', '25 TO 27', '28 TO 30',
+                    '31 TO 33', '34 TO 36', '37 TO 39', '40 TO 42', '43 TO 45',
+                    '46 TO 48', '49 TO 51']
     selected_storey_range = st.selectbox('Selected Storey Range', storey_range)
     st.write('You selected:', selected_storey_range)
 
